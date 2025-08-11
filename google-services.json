@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "995193225315",
+    "firebase_url": "https://lattosio-e-glutine-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "lattosio-e-glutine",
+    "storage_bucket": "lattosio-e-glutine.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:995193225315:android:714265e31e32b454b67856",
+        "android_client_info": {
+          "package_name": "com.pierre1590.lattosioeglutine"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAhs5YvDG1kUGDS_3jKLkYwno4m6m5guk4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

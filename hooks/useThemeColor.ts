@@ -1,21 +1,43 @@
+// Importa l'hook useTheme dal contesto del tema
+import { useTheme } from '../context/ThemeContext';
+// Importa ColorKey direttamente da constants/Colors
+import { ColorKey } from '../constants/Color';
+
+// Definizione locale del tipo ThemeColors
+type ThemeColors = Record<ColorKey, string>;
+
 /**
- * Learn more about light and dark modes:
- * https://docs.expo.dev/guides/color-schemes/
+ * Un hook React per accedere alla palette di colori corrente del tema.
+ * Questo hook utilizza il `ThemeContext` per determinare se la modalità è chiara o scura
+ * e restituisce la palette di colori corrispondente.
+ *
+ * Utilizzo:
+ * const colors = useThemeColor();
+ * // Poi puoi accedere ai colori come colors.primary, colors.background, ecc.
+ *
+ * @returns L'oggetto 'ThemeColors' contenente tutti i colori per il tema corrente.
  */
+export const useThemeColor = (): ThemeColors => {
+  const { colors } = useTheme(); // Ottiene il tema dal contesto
+  return colors as ThemeColors;
+};
 
-import { Colors } from '@/constants/Colors';
-import { useColorScheme } from '@/hooks/useColorScheme';
+/**
+ * Un hook React per ottenere un colore specifico dalla palette del tema corrente tramite il suo nome (chiave).
+ * Restituisce una funzione che accetta una chiave di colore e restituisce il valore del colore.
+ *
+ * Utilizzo:
+ * const getSpecificColor = useSpecificThemeColor();
+ * const primaryColor = getSpecificColor('primary');
+ * const backgroundColor = getSpecificColor('background');
+ *
+ * @returns Una funzione che prende una chiave di 'ThemeColors' e restituisce il colore corrispondente.
+ */
+export const useSpecificThemeColor = () => {
+  const { colors } = useTheme(); // Ottiene il tema dal contesto
 
-export function useThemeColor(
-  props: { light?: string; dark?: string },
-  colorName: keyof typeof Colors.light & keyof typeof Colors.dark
-) {
-  const theme = useColorScheme() ?? 'light';
-  const colorFromProps = props[theme];
-
-  if (colorFromProps) {
-    return colorFromProps;
-  } else {
-    return Colors[theme][colorName];
-  }
-}
+  const getThemeColor = (colorName: ColorKey): string => {
+    return colors[colorName];
+  };
+  return getThemeColor;
+};
