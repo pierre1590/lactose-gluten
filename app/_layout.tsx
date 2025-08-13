@@ -1,7 +1,4 @@
-// app/_layout.tsx
-// Questo è il file di layout principale per Expo Router.
-
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Stack } from 'expo-router';
 import { View, StyleSheet, Platform, TouchableOpacity, Text } from 'react-native';
 import { ThemeProvider, useTheme } from '../context/ThemeContext';
@@ -14,6 +11,11 @@ import Animated, {
   useAnimatedStyle,
   withTiming,
 } from 'react-native-reanimated';
+import AnimatedSplashScreen from '../components/AnimatedSplashScreen'; // Importa il componente splash screen animato
+import * as SplashScreen from 'expo-splash-screen';
+
+// Mantieni la splash screen visibile mentre carichiamo i font e le altre risorse
+SplashScreen.preventAutoHideAsync();
 
 /**
  * Componente interno che consuma il tema.
@@ -29,7 +31,6 @@ const RootLayoutContent: React.FC = () => {
   const SLIDER_WIDTH = SWITCH_WIDTH / 2;
 
   // Valore animato per la posizione dello slider
-  // 0 per il sole (modalità light), SLIDER_WIDTH per la luna (modalità dark)
   const sliderPosition = useSharedValue(themeMode === 'light' ? 0 : SLIDER_WIDTH);
 
   // Aggiorna la posizione dello slider quando il tema cambia
@@ -63,7 +64,7 @@ const RootLayoutContent: React.FC = () => {
         elevation: 5,
       },
       iconContainer: {
-        width: '50%', // Ogni contenitore di icona occupa metà dello spazio
+        width: '50%',
         height: '100%',
         alignItems: 'center',
         justifyContent: 'center',
@@ -142,7 +143,10 @@ const RootLayoutContent: React.FC = () => {
 const RootLayout: React.FC = () => {
   return (
     <ThemeProvider>
-      <RootLayoutContent />
+      {/* Avvolge il contenuto principale dell'app con il componente splash screen animato */}
+      <AnimatedSplashScreen>
+        <RootLayoutContent />
+      </AnimatedSplashScreen>
     </ThemeProvider>
   );
 };
