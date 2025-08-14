@@ -3,8 +3,8 @@
     "name": "lattosioeglutine",
     "slug": "lattosioeglutine",
     "version": "1.0.1",
+    "icon": "./assets/icons/icon.png",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
     "scheme": "lattosioeglutine",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
@@ -17,10 +17,6 @@
       }
     },
     "android": {
-      "adaptiveIcon": {
-        "backgroundColor": "#ffffff",
-        "foregroundImage": "./assets/icons/adaptive-icon.png"
-      },
       "edgeToEdgeEnabled": true,
       "package": "com.pierre1590.lattosioeglutine"
     },

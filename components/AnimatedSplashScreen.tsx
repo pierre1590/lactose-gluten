@@ -1,7 +1,6 @@
 import React, { useEffect, useState, ReactNode } from 'react';
 import { View, StyleSheet, Text, Platform } from 'react-native';
-import { Video } from 'expo-video'; // Importa il componente Video dal nuovo pacchetto
-
+import LottieView from 'lottie-react-native'; // Importa il componente LottieView
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
@@ -53,7 +52,7 @@ const SplashView = ({ onAnimationFinish }: SplashViewProps) => {
   const colors = useThemeColor();
   const opacity = useSharedValue(1);
   const scale = useSharedValue(1);
-  const videoRef = React.useRef<Video>(null);
+  const animationRef = React.useRef<LottieView>(null); // Riferimento all'animazione Lottie
 
   const splashStyle = useAnimatedStyle(() => {
     return {
@@ -63,7 +62,6 @@ const SplashView = ({ onAnimationFinish }: SplashViewProps) => {
   });
 
   const hideSplash = () => {
-    'worklet';
     opacity.value = withTiming(0, { duration: 500 });
     scale.value = withTiming(1.2, { duration: 500 }, (finished) => {
       if (finished) {
@@ -73,12 +71,10 @@ const SplashView = ({ onAnimationFinish }: SplashViewProps) => {
   };
 
   useEffect(() => {
-    const playVideo = async () => {
-      if (videoRef.current) {
-        await videoRef.current.playAsync();
-      }
-    };
-    playVideo();
+    // Avvia l'animazione Lottie all'interno del componente
+    if (animationRef.current) {
+      animationRef.current.play();
+    }
   }, []);
 
   const styles = StyleSheet.create({
@@ -88,7 +84,7 @@ const SplashView = ({ onAnimationFinish }: SplashViewProps) => {
       justifyContent: 'center',
       alignItems: 'center',
     },
-    video: {
+    animation: {
       width: '100%',
       height: '100%',
     },
@@ -96,17 +92,14 @@ const SplashView = ({ onAnimationFinish }: SplashViewProps) => {
 
   return (
     <Animated.View style={[styles.container, splashStyle]}>
-      <Video
-        ref={videoRef}
-        source={require('../assets/No-stress.mp4')}
-        style={styles.video}
-        resizeMode="cover"
-        isLooping={false}
-        shouldPlay={false} // Non avviare automaticamente
-        onPlaybackStatusUpdate={(status: AVPlaybackStatus) => {
-          if (status.isLoaded && status.didJustFinish) {
-            hideSplash();
-          }
+      <LottieView
+        ref={animationRef}
+        source={require('../assets//lottie/No-stress.json')}
+        style={styles.animation}
+        loop={false}
+        autoPlay={false} // Non avviare automaticamente, lo facciamo noi in useEffect
+        onAnimationFinish={() => {
+          hideSplash();
         }}
       />
     </Animated.View>
